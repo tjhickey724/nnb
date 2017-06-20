@@ -1,12 +1,15 @@
 Template.addperson.helpers({
-  chorelist() {
+  chorelist: function() {
        console.log("in chorelist");
        return ['wash dishes','walk dogs','drive to school',
-        'take out garbage','pay bills','clean bathroom']},
+        'take out garbage','pay bills','clean bathroom']
+      },
+
 })
 
 Template.showpeople.helpers({
-  peoplelist() {return People.find()},
+  peoplelist: function() {return People.find()},
+
 })
 
 Template.addperson.events({
@@ -14,7 +17,6 @@ Template.addperson.events({
     const name = instance.$('#name').val();
     const year = instance.$('#birthyear').val();
     const birthyear = parseInt(year);
-    //console.log('adding '+name);
     // here we read all the checked chores from the inputs
     choreinputs = instance.$("#chorelist input");
     chores = [];
@@ -26,14 +28,19 @@ Template.addperson.events({
     instance.$('#name').val("");
     instance.$('#birthyear').val("");
 
-    // here we remove all other entries for that person
-    persons = People.find({owner:Meteor.userId()}).fetch();
-    //console.dir(persons);
-    persons.forEach(function(person){
-        People.remove(person._id);
-    })
-
-    People.insert({name:name,birthyear:birthyear,chores:chores,owner:Meteor.userId()});
+    var chore =
+      { name:name,
+        birthyear:birthyear,
+        chores:chores,
+        owner:Meteor.userId()
+      };
+    Meteor.call('chore.insert',chore,
+      (err,res) => {
+           console.log('got the answer');
+           console.dir([err,res]);
+          }
+    );
+    //People.insert(chore);
     //People.insert({name,birthyear})
   }
 })
@@ -46,8 +53,11 @@ Template.personrow.events({
       console.dir(this);
       console.log(this);
       console.log(this.person._id);
+      Meteor.call('chore.remove',this.person);
+      /*
       if (Meteor.userId()==this.person.owner){
         People.remove(this.person._id);
       }
+      */
     }
 })
