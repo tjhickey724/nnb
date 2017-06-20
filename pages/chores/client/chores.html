@@ -1,0 +1,53 @@
+
+<template name="peoplelist">
+  <h1>Chores Page</h1>
+  {{> addperson}}
+  <hr>
+  {{> showpeople}}
+</template>
+
+
+<template name="addperson">
+    {{#if currentUser}}
+  Name: <input type="text" id="name">  <br>
+  Birthyear: <select id="birthyear">
+    <option>1995</option>
+    <option>1996</option>
+    <option>1997</option>
+    <option>1998</option>
+    <option>1999</option>
+    <option>2000</option>
+  </select>
+  <div id="chorelist">
+    {{#each chore in chorelist}}
+    <input type="checkbox" name="chore" value="{{chore}}">{{chore}}<br>
+    {{/each}}
+  </div>
+  <button id="addperson" class="btn btn-primary">
+     Add to Collection
+   </button>
+   {{else}}
+   You must log in to change your entry
+   {{/if}}
+</template>
+
+
+
+<template name="showpeople">
+  <ul>
+  {{#each p in peoplelist}}
+    <li>{{> personrow person=p}}</li>
+  {{/each}}
+  </ul>
+
+</template>
+
+<template name="personrow">
+  {{person.name}}--{{person.birthyear}}
+  {{#each chore in person.chores}}
+     {{chore}}
+  {{/each}}
+  {{#if owner}}
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+  {{/if}}
+</template>
