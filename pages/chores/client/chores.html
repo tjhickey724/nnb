@@ -45,12 +45,22 @@
 
 
 <template name="showpeople">
-  <ul>
-  {{#each p in peoplelist}}
-    <li>{{> personrow person=p}}</li>
-  {{/each}}
-  </ul>
-
+  tableFormat = '{{tableFormat}}'
+  {{#if tableFormat}}
+     <table class="table table-bordered table-striped">
+      <tbody>
+       {{#each p in peoplelist}}
+         <tr><td>{{> personrow person=p}}</td></tr>
+       {{/each}}
+      </tbody>
+     </table>
+  {{else}}
+     <ul>
+      {{#each p in peoplelist}}
+       <li>{{> personrow person=p}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
 </template>
 
 <template name="personrow">

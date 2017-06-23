@@ -8,6 +8,9 @@ Template.addperson.onCreated(function addpersonOnCreated() {
   this.showBorder= new ReactiveVar(false);
 });
 
+
+
+
 Template.addperson.helpers({
   chorelist: function() {
        console.log("in chorelist");
@@ -19,11 +22,13 @@ Template.addperson.helpers({
        return Template.instance().counter.get();
        },
 
+
+
   borderCSS() {
        if (Template.instance().showBorder.get())
          return "showBorder";
        else {
-         return "";
+         return "showNormal";
        }
   }
 })
@@ -77,8 +82,20 @@ Template.addperson.events({
 })
 
 
+
+Template.showpeople.onCreated(function() {
+  // counter starts at 0
+  this.tableFormat= new ReactiveVar(false);
+});
+
 Template.showpeople.helpers({
   peoplelist() {return People.find()},
+
+  tableFormat() {
+      console.log("looking up table format");
+      console.dir(Template.instance().tableFormat.get());
+      return Template.instance().tableFormat.get();
+    },
 })
 
 
