@@ -9,7 +9,9 @@
 
 <template name="addperson">
     {{#if currentUser}}
+ <div id="addperson" class="{{borderCSS}}">
   Name: <input type="text" id="name">  <br>
+
   Birthyear: <select id="birthyear">
     <option>1995</option>
     <option>1996</option>
@@ -18,6 +20,7 @@
     <option>1999</option>
     <option>2000</option>
   </select>
+
   <div id="chorelist">
     {{#each chore in chorelist}}
     <input type="checkbox" name="chore" value="{{chore}}">{{chore}}<br>
@@ -26,6 +29,12 @@
   <button id="addperson" class="btn btn-primary">
      Add to Collection
    </button>
+   <br>
+   <input type='checkbox' id='jsShowBorder'> Show border<br>
+   borderCSS = {{borderCSS}}<br>
+   The "Add to Collection" button has been pushed {{counter}} times
+   this session on this browser.
+  </div>
    {{else}}
    You must log in to change your entry
    {{/if}}

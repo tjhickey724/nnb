@@ -1,13 +1,34 @@
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+
+
+Template.addperson.onCreated(function addpersonOnCreated() {
+  // counter starts at 0
+  this.counter = new ReactiveVar(0);
+  this.showBorder= new ReactiveVar(false);
+});
+
 Template.addperson.helpers({
   chorelist() {
        console.log("in chorelist");
        return ['wash dishes','walk dogs','drive to school',
-        'take out garbage','pay bills','clean bathroom']},
+        'take out garbage','pay bills','clean bathroom']
+      },
+
+  counter() {
+       return Template.instance().counter.get();
+       },
+
+  borderCSS() {
+       if (Template.instance().showBorder.get())
+         return "showBorder";
+       else {
+         return "";
+       }
+  }
 })
 
-Template.showpeople.helpers({
-  peoplelist() {return People.find()},
-})
+
 
 Template.addperson.events({
   'click button'(elt,instance) {
@@ -22,9 +43,9 @@ Template.addperson.events({
       if (b.checked) { chores.push(b.value);}
     });
 
-    //console.log(chores);
-    instance.$('#name').val("");
-    instance.$('#birthyear').val("");
+    //We can clear the text fields by uncommenting these lines
+    //instance.$('#name').val("");
+    //instance.$('#birthyear').val("");
 
     // here we remove all other entries for that person
     persons = People.find({owner:Meteor.userId()}).fetch();
@@ -35,12 +56,33 @@ Template.addperson.events({
 
     People.insert({name:name,birthyear:birthyear,chores:chores,owner:Meteor.userId()});
     //People.insert({name,birthyear})
+
+      instance.counter.set(instance.counter.get() + 1);
+  },
+
+
+  'change #jsShowBorder'(event, instance) {
+    console.dir(this);
+    console.dir(event);
+    console.dir(instance);
+    console.dir(event.currentTarget.checked);
+    instance.showBorder.set(event.currentTarget.checked);
+    console.log(instance.showBorder.get());
   }
+
 })
+
+
+Template.showpeople.helpers({
+  peoplelist() {return People.find()},
+})
+
 
 Template.personrow.helpers({
   owner() {return (Meteor.userId()==this.person.owner)}
 })
+
+
 Template.personrow.events({
     'click span'(elt,instance) {
       console.dir(this);
