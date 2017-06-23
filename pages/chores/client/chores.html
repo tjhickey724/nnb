@@ -8,8 +8,9 @@
 
 
 <template name="addperson">
+  <div id="addperson">
     {{#if currentUser}}
- <div id="addperson" class="{{borderCSS}}">
+ <div class="{{borderCSS}}">
   Name: <input type="text" id="name">  <br>
 
   Birthyear: <select id="birthyear">
@@ -38,6 +39,7 @@
    {{else}}
    You must log in to change your entry
    {{/if}}
+ </div>
 </template>
 
 

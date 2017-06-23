@@ -1,4 +1,4 @@
-.showBorder {
+div#addperson .showBorder {
   padding:10px;
   margin:10px;
   border: thin solid blue;
