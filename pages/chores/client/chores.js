@@ -92,11 +92,16 @@ Template.showpeople.helpers({
   peoplelist() {return People.find()},
 
   tableFormat() {
-      console.log("looking up table format");
-      console.dir(Template.instance().tableFormat.get());
       return Template.instance().tableFormat.get();
     },
 })
+
+Template.showpeople.events({
+  'change #js-tableFormat': function(event, instance) {
+    instance.tableFormat.set(event.currentTarget.checked);
+  }
+})
+
 
 
 Template.personrow.helpers({
