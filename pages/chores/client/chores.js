@@ -72,7 +72,8 @@ Template.addperson.events({
     console.dir(event.currentTarget.checked);
     instance.showBorder.set(event.currentTarget.checked);
     console.log(instance.showBorder.get());
-  }
+  },
+
 
 })
 
