@@ -45,12 +45,34 @@
 
 
 <template name="showpeople">
-  <ul>
-  {{#each p in peoplelist}}
-    <li>{{> personrow person=p}}</li>
-  {{/each}}
-  </ul>
+  tableFormat = '{{tableFormat}}'
 
+  <input type="checkbox" id="js-tableFormat"><br>
+
+  {{#if tableFormat}}
+     <table class="table table-bordered table-striped">
+      <tbody>
+       {{#each p in peoplelist}}
+         {{> persontablerow person=p}}
+       {{/each}}
+      </tbody>
+     </table>
+  {{else}}
+     <ul>
+      {{#each p in peoplelist}}
+       <li>{{> personrow person=p}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+  <hr><hr>
+</template>
+
+<template name="persontablerow">
+  <tr><td>{{person.name}}</td><td>{{person.birthyear}}</td>
+    {{#each chore in person.chores}}
+       <td>{{chore}}</td>
+    {{/each}}
+  </tr>
 </template>
 
 <template name="personrow">
