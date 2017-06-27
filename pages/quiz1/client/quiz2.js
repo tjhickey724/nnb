@@ -1,3 +1,9 @@
+
+Template.quiz2.onCreated(function() {
+ Meteor.subscribe('bios');
+});
+
+
  Template.quiz2.helpers({
    bios() {return Bios.find();}
  })
@@ -16,7 +22,9 @@
      } else {
        alert('you must check the box to insert your bio');
      }
-   }
+   },
+
+
  })
 
 
